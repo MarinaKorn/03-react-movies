@@ -8,7 +8,7 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import MovieModal from "../MovieModal/MovieModal";
 
-import { fetchMovies } from "../../services/movieService";
+import { fetchMovies } from "../../services/api";
 import type { Movie } from "../../types/movie";
 
 export default function App() {
@@ -45,9 +45,15 @@ export default function App() {
   const handleClose = () => setSelectedMovie(null);
 
   return (
-    <div className={css.app}>
+    <>
+      <header className={css.header}>
+        <div className={css.container}>
+          <SearchBar onSubmit={handleSearch} />
+          <p>Powered by TMDB</p>
+        </div>
+      </header>
+
       <Toaster position="top-right" />
-      <SearchBar onSubmit={handleSearch} />
       {loading && <Loader />}
       {error && <ErrorMessage />}
       {movies.length > 0 && (
@@ -56,6 +62,6 @@ export default function App() {
       {selectedMovie && (
         <MovieModal movie={selectedMovie} onClose={handleClose} />
       )}
-    </div>
+    </>
   );
 }
